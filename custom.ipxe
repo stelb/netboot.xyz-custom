@@ -3,7 +3,7 @@
 ### netboot.xyz-custom
 ###
 
-set version 6.2-1
+set version 6.1-2
 set netbooter 10.11.0.211
 
 ### Proxmox
