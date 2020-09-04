@@ -3,6 +3,9 @@
 ### netboot.xyz-custom
 ###
 
+set version 6.2-1
+set netbooter 10.11.0.211
+
 ### Proxmox
 
 menu Proxmox
@@ -10,11 +13,11 @@ menu Proxmox
     item debug Install Proxmox (Debug Mode)
 choose --default normal --timeout 5000 target && goto ${target}
 :debug
-    kernel http://${webserver}/proxmox/${version}/linux26 vga=791 video=vesafb:ywrap,mtrr ramdisk_size=16777216 rw quiet splash=verbose proxdebug initrd=initrd.iso.img
+    kernel http://${netbooter}/proxmox-assets/releases/download/${version}/linux26 vga=791 video=vesafb:ywrap,mtrr ramdisk_size=16777216 rw quiet splash=verbose proxdebug initrd=initrd.iso.img
     goto init
 :normal
-    kernel http://${webserver}/proxmox/${version}/linux26 vga=791 video=vesafb:ywrap,mtrr ramdisk_size=16777216 rw quiet splash=silent initrd=initrd.iso.img
+    kernel http://${netbooter}/proxmox-assets/releases/download/${version}/linux26 vga=791 video=vesafb:ywrap,mtrr ramdisk_size=16777216 rw quiet splash=silent initrd=initrd.iso.img
     goto init
 :init
-initrd http://${webserver}/proxmox/${version}/initrd.iso.img
+initrd http://${netbooter}/proxmox-assets/releases/download/${version}/initrd.iso.img
 boot
