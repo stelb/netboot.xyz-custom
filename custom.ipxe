@@ -1,12 +1,20 @@
 #!ipxe
 ###
-### netboot.xyz-custom menu
+### netboot.xyz-custom
 ###
 
-:start
-echo Hello world!
-sleep 10
-goto custom_exit
+### Proxmox
 
-:custom_exit
-exit 0
+menu Proxmox
+    item normal Install Proxmox
+    item debug Install Proxmox (Debug Mode)
+choose --default normal --timeout 5000 target && goto ${target}
+:debug
+    kernel http://${webserver}/proxmox/${version}/linux26 vga=791 video=vesafb:ywrap,mtrr ramdisk_size=16777216 rw quiet splash=verbose proxdebug initrd=initrd.iso.img
+    goto init
+:normal
+    kernel http://${webserver}/proxmox/${version}/linux26 vga=791 video=vesafb:ywrap,mtrr ramdisk_size=16777216 rw quiet splash=silent initrd=initrd.iso.img
+    goto init
+:init
+initrd http://${webserver}/proxmox/${version}/initrd.iso.img
+boot
